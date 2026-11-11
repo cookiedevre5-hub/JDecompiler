@@ -29,12 +29,6 @@ namespace uTinyRipperConsole
 		{
 			Logger.Instance = ConsoleLogger.Instance;
 
-			if (args.Length > 0 && args[0] == "--recover-il2cpp")
-			{
-				Environment.ExitCode = Il2CppScriptRecovery.Run(args);
-				return;
-			}
-
 			if (args.Length == 0)
 			{
 				Console.WriteLine("Usage: uTinyRipperCmd <file-or-directory> [additional-files...]");
@@ -94,6 +88,17 @@ namespace uTinyRipperConsole
 #endif
 
 				GameStructure.Export(exportPath, AssetSelector);
+
+				// IL2CPP recovery is part of the normal decompilation pipeline.
+				// Mono scripts continue to be exported by the native ScriptAssetExporter.
+				string gameDirectory = args.FirstOrDefault(Directory.Exists);
+				if (!string.IsNullOrEmpty(gameDirectory))
+				{
+					Il2CppScriptRecovery.RecoverAutomatically(
+						gameDirectory,
+						Path.Combine(exportPath, "Scripts", "IL2CPP"));
+				}
+
 				Logger.Log(LogType.Info, LogCategory.General, "Finished");
 			}
 #if !DEBUG_PROGRAM
