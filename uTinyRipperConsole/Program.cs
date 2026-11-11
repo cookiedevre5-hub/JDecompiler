@@ -29,6 +29,12 @@ namespace uTinyRipperConsole
 		{
 			Logger.Instance = ConsoleLogger.Instance;
 
+			if (args.Length > 0 && args[0] == "--recover-il2cpp")
+			{
+				Environment.ExitCode = Il2CppScriptRecovery.Run(args);
+				return;
+			}
+
 			if (args.Length == 0)
 			{
 				Console.WriteLine("Usage: uTinyRipperCmd <file-or-directory> [additional-files...]");
