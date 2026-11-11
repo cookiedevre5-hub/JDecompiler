@@ -31,8 +31,10 @@ namespace uTinyRipperConsole
 
 			if (args.Length == 0)
 			{
-				Console.WriteLine("No arguments");
+				Console.WriteLine("Usage: uTinyRipperCmd <file-or-directory> [additional-files...]");
+#if !NET_CORE
 				Console.ReadKey();
+#endif
 				return;
 			}
 
@@ -49,13 +51,14 @@ namespace uTinyRipperConsole
 				Console.WriteLine(MultiFileStream.IsMultiFile(arg) ?
 					$"File '{arg}' doesn't have all parts for combining" :
 					$"Neither file nor directory with path '{arg}' exists");
+				#if !NET_CORE
 				Console.ReadKey();
+				#endif
 				return;
 			}
 
 			Program program = new Program();
 			program.Load(args);
-			Console.ReadKey();
 		}
 
 		public void Load(IReadOnlyList<string> args)
