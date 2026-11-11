@@ -79,3 +79,33 @@ If you want to run binary files, you need to install:
 
  \- [Unity 2017.3.0f3 or greater](https://unity3d.com/get-unity/download/archive) (NOTE: your editor version must be no less than the game's version)
  
+
+
+## JDecompiler development
+
+This fork is being extended with cross-platform command-line support and an IL2CPP recovery pipeline.
+
+### Linux command-line build
+
+The cross-platform console project targets .NET 8:
+
+```bash
+dotnet build uTinyRipperConsole/uTinyRipperConsoleNETCore.csproj -c Release
+dotnet run --project uTinyRipperConsole/uTinyRipperConsoleNETCore.csproj -- /path/to/unity/game
+```
+
+The console application no longer waits for a keypress after processing, so it can run from a Linux terminal and in automated scripts.
+
+The legacy WPF GUI remains Windows-only. Use the console project on Linux.
+
+### IL2CPP recovery roadmap
+
+The intended Script Level 3 pipeline is:
+
+1. Detect IL2CPP builds from Unity metadata and native runtime files.
+2. Invoke Cpp2IL to analyze the IL2CPP metadata and native binary.
+3. Recover managed assemblies and decompile the recovered IL into C# source.
+4. Export namespaces, types, fields, properties and methods into organized `.cs` files.
+5. Place recovered scripts into a Unity-compatible project structure and report unresolved or approximate code.
+
+**Current status:** Linux console modernization is in progress. Cpp2IL invocation, automatic IL2CPP detection, and Script Level 3 source export are not implemented yet. Recovered source may require manual fixes and cannot be guaranteed to match the original source or compile unchanged.
