@@ -1,0 +1,24 @@
+name: Linux console build
+
+on:
+  push:
+    branches:
+      - master
+      - feature/**
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-console:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install .NET 8 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Build cross-platform console
+        run: dotnet build uTinyRipperConsole/uTinyRipperConsoleNETCore.csproj --configuration Release
