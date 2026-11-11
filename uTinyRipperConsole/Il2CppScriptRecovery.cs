@@ -32,6 +32,26 @@ namespace uTinyRipperConsole
             public string Status { get; set; }
         }
 
+        public static void RecoverAutomatically(string gamePath, string outputPath)
+        {
+            string metadataPath;
+            string nativeBinaryPath;
+            if (!TryDetectIl2Cpp(Path.GetFullPath(gamePath), out metadataPath, out nativeBinaryPath))
+            {
+                Console.WriteLine("[JDecompiler] Mono or non-IL2CPP build detected. Skipping IL2CPP recovery.");
+                return;
+            }
+
+            Console.WriteLine("[JDecompiler] IL2CPP backend detected. Starting integrated script recovery.");
+            Run(new[]
+            {
+                "--recover-il2cpp",
+                gamePath,
+                "--output",
+                outputPath
+            });
+        }
+
         public static int Run(string[] args)
         {
             Options options;
