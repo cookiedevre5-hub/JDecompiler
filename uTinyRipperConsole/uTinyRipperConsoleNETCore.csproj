@@ -1,12 +1,13 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
-	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-	<AssemblyName>uTinyRipperCmd</AssemblyName>
-	<RootNamespace>uTinyRipperConsole</RootNamespace>
-	<LangVersion>7.3</LangVersion>
+    <TargetFramework>net8.0</TargetFramework>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AssemblyName>uTinyRipperCmd</AssemblyName>
+    <RootNamespace>uTinyRipperConsole</RootNamespace>
+    <LangVersion>7.3</LangVersion>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -16,8 +17,8 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>..\Bins\CP\$(Configuration)\</OutputPath>
     <DefineConstants>TRACE;NET_CORE</DefineConstants>
+    <OutputPath>..\Bins\CP\$(Configuration)\</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Virtual|AnyCPU'">
@@ -28,9 +29,6 @@
 
   <ItemGroup>
     <Compile Remove="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="App.config" />
     <None Remove="App.manifest" />
   </ItemGroup>
@@ -38,5 +36,4 @@
   <ItemGroup>
     <ProjectReference Include="..\uTinyRipperCore\uTinyRipperCore.csproj" />
   </ItemGroup>
-
 </Project>
